@@ -164,7 +164,7 @@ def extract_number(f):
     s = re.findall("\d+", f)
     return int(s[0]) if s else -1
 
-def speaker_rec_GMM(audio_dir, test_dir, n_components=1):
+def custom_GMM_multi(audio_dir, test_dir, n_components=1):
     """
     Predict the speaker of each audio file in the test directory using trained GMM models.
     """
@@ -190,5 +190,5 @@ def speaker_rec_GMM(audio_dir, test_dir, n_components=1):
     return predict_dict
 
 # Example usage
-# prediction = speaker_rec_GMM('./train_data', './test_data')
+# prediction = custom_GMM_multi('./train_data', './test_data')
 # print(prediction)
