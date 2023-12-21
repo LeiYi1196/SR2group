@@ -1,13 +1,11 @@
 from scipy.stats import multivariate_normal
-from sklearn.cluster import KMeans
+from scipy.cluster.vq import kmeans
+from scipy.io import wavfile
 import os
 import re
 import numpy as np
-from scipy.io import wavfile
 from tqdm import tqdm
 from librosa.feature import mfcc
-from sklearn.cluster import KMeans
-
 
 class CustomGMM: 
     """
@@ -33,12 +31,13 @@ class CustomGMM:
         """
         n_samples, n_features = X.shape
 
-        kmeans = KMeans(n_clusters=self.n_components, n_init=10)
-        kmeans.fit(X)
-        self.means = kmeans.cluster_centers_ # Initialize means using K-Means centroids
+        # Initialize means using the SciPy kmeans function. Note the difference in usage compared to scikit-learn.
+        centroids, _ = kmeans(X, self.n_components)
+        self.means = centroids  # Initialize means using centroids from K-Means
 
-        self.weights = np.full(self.n_components, 1 / self.n_components) # Initialize weights to be uniform
-        self.covariances = np.array([np.cov(X.T) for _ in range(self.n_components)]) # Initialize covariances
+        self.weights = np.full(self.n_components, 1 / self.n_components) # Initialize weights to uniform distribution
+        self.covariances = np.array([np.cov(X.T) for _ in range(self.n_components)]) # Initialize covariance matrices
+
 
     def e_step(self, X):
         """
@@ -190,5 +189,5 @@ def custom_GMM_multi(audio_dir, test_dir, n_components=1):
     return predict_dict
 
 # Example usage
-# prediction = custom_GMM_multi('./train_data', './test_data')
-# print(prediction)
+prediction = custom_GMM_multi('./train_data', './test_data')
+print(prediction)
