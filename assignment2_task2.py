@@ -41,7 +41,7 @@ def expectation_maximization(data, means, variances, weights, epsilon):
         means = new_means
         variances = new_variances
         weights = new_weights
-
+    print('means:', means, '\tvariances:', variances, '\tweights:', weights)
     return means, variances, weights
 
 def custom_GMM_uni(data, K_components, epsilon=1e-6, seed=None):
@@ -57,7 +57,7 @@ def custom_GMM_uni(data, K_components, epsilon=1e-6, seed=None):
 
     return params_dict
 
-x = np.array([4.6, 12.4, 10.2, 12.8, 12.3, 13.0, 4.3, 4.2, 9.2, 12.0,
-12.6, 5.6, 4.6, 9.4, 5.6, 10.0, 10.4, 4.0, 11.4, 10.2])
-parameters = custom_GMM_uni(data=x, K_components=2, epsilon=10e-6, seed=1234)
-print(parameters)
+# x = np.array([4.6, 12.4, 10.2, 12.8, 12.3, 13.0, 4.3, 4.2, 9.2, 12.0,
+# 12.6, 5.6, 4.6, 9.4, 5.6, 10.0, 10.4, 4.0, 11.4, 10.2])
+# parameters = custom_GMM_uni(data=x, K_components=2, epsilon=10e-6, seed=1234)
+# print(parameters)
